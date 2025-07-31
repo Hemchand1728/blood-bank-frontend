@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧪 Blood Inventory | Admin</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f0f4ff, #ffffff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(to right, #1976d2, #0d47a1);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .container {
+      padding: 40px;
+      flex: 1;
+    }
+
+    h2 {
+      text-align: center;
+      color: #0d47a1;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: center;
+      font-size: 1em;
+    }
+
+    th {
+      background: #bbdefb;
+      color: #0d47a1;
+      font-weight: bold;
+      border-bottom: 2px solid #90caf9;
+    }
+
+    td {
+      border-bottom: 1px solid #e3f2fd;
+    }
+
+    tr:hover {
+      background-color: #f1f8ff;
+    }
+
+    .units {
+      font-weight: bold;
+      color: #1a237e;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #e3f2fd;
+      font-size: 0.9em;
+      color: #555;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🩸 Blood Inventory</h1>
+    <p>Live overview of blood stock levels</p>
+  </header>
+
+  <div class="container">
+    <h2>📊 Available Inventory</h2>
+    <table id="inventoryTable">
+      <thead>
+        <tr>
+          <th>🏥 Hospital</th>
+          <th>📍 Location</th>
+          <th>🩸 Blood Group</th>
+          <th>📦 Units</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be injected here -->
+      </tbody>
+    </table>
+  </div>
+
+  <footer>© 2025 Blood Bank System | Admin Panel</footer>
+
+  <script>
+    async function loadInventory() {
+      try {
+        const res = await fetch("http://localhost:5050/api/inventory");
+        const data = await res.json();
+        const tbody = document.querySelector("#inventoryTable tbody");
+        tbody.innerHTML = "";
+
+        if (!data || data.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4">No inventory data available</td></tr>`;
+          return;
+        }
+
+        data.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.hospital}</td>
+            <td>${item.location}</td>
+            <td>${item.bloodGroup}</td>
+            <td class="units">${item.units}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Error fetching inventory:", err);
+        alert("❌ Failed to load inventory.");
+      }
+    }
+
+    loadInventory();
+  </script>
+</body>
+</html>

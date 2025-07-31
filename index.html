@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🩸Blood Bank Management System</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #fff0f0, #ffe0e0);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3em;
+      color: #b71c1c;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .tagline {
+      font-style: italic;
+      color: #c62828;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero-btn {
+      text-decoration: none;
+      padding: 14px 32px;
+      background: linear-gradient(90deg, #ff5252, #ffca28);
+      color: white;
+      font-weight: bold;
+      font-size: 1.1em;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 82, 82, 0.4);
+    }
+
+    .hero-btn:hover {
+      background: linear-gradient(90deg, #ffca28, #ff5252);
+      transform: scale(1.05);
+    }
+
+    .admin-btn {
+      background: linear-gradient(90deg, #424242, #757575);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(66, 66, 66, 0.4);
+    }
+
+    .admin-btn:hover {
+      background: linear-gradient(90deg, #757575, #424242);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <h1>Give the Gift of Life – One Drop at a Time</h1>
+    <p class="tagline">Join us in saving lives through safe and organized blood donation.</p>
+    <p>
+      Our Blood Bank Management System connects donors, recipients, and hospitals efficiently.<br />
+      Register now to become a donor or request blood in emergencies.
+    </p>
+    <div class="btn-group">
+      <a href="login.html" class="hero-btn">Login</a>
+      <a href="register.html" class="hero-btn">Register</a>
+      <a href="admin-login.html" class="hero-btn admin-btn">Admin Login</a>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 Blood Bank Management System | Designed by Hemachandu Guthati
+  </footer>
+</body>
+</html>
