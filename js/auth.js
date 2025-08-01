@@ -1,4 +1,4 @@
-const API = 'https://blood-bank-backend-bbp2.onrender.com/api';
+const API = '/api';
 
 // Register
 if (document.getElementById('registerForm')) {
@@ -12,7 +12,7 @@ if (document.getElementById('registerForm')) {
       role: document.getElementById('role').value
     };
 
-    const res = await fetch(`${API}/register`, {
+    const res = await fetch(`${apiUrl}${API}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -36,8 +36,8 @@ if (document.getElementById('registerForm')) {
 if (document.getElementById('loginForm')) {
   document.getElementById('loginForm').onsubmit = async function (e) {
     e.preventDefault();
-    
-    const res = await fetch(`${API}/login`, {
+
+    const res = await fetch(`${apiUrl}${API}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
