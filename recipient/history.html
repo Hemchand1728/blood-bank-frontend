@@ -35,7 +35,7 @@
     const token = localStorage.getItem('token');
     const historyList = document.getElementById('historyList');
 
-    fetch('/api/recipient/history', {
+    fetch(apiUrl + `'/api/recipient/history', {
       headers: {
         Authorization: token
       }

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const role = document.getElementById("role").value;
 
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(apiUrl + `"/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role })

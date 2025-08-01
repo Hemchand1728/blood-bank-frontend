@@ -113,12 +113,20 @@
 
   <footer>© 2025 Blood Bank Management | Admin Panel</footer>
 
+  <!-- ✅ Load Config for API URL -->
+  <script src="../js/config.js"></script>
+
+  <!-- ✅ Script to fetch and display users -->
   <script>
     async function fetchUsers() {
       try {
-        const res = await fetch("http://localhost:5050/api/admin/users");
-        const users = await res.json();
+        const res = await fetch(apiUrl + "/api/admin/users", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
+        });
 
+        const users = await res.json();
         const tbody = document.querySelector("#usersTable tbody");
         tbody.innerHTML = "";
 
@@ -143,7 +151,6 @@
       }
     }
 
-    // Load users on page load
     fetchUsers();
   </script>
 </body>

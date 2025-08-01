@@ -129,10 +129,12 @@
     </table>
   </div>
 
+  <script src="../js/config.js"></script> <!-- Make sure this is present and defines apiUrl -->
+
   <script>
     async function fetchRequests() {
       try {
-        const res = await fetch('http://localhost:5050/api/admin/requests');
+        const res = await fetch(apiUrl + "/api/admin/requests");
         const data = await res.json();
 
         const tbody = document.querySelector("#requestsTable tbody");
@@ -162,7 +164,7 @@
 
     async function updateStatus(id, status) {
       try {
-        const res = await fetch(`http://localhost:5050/api/admin/requests/${id}`, {
+        const res = await fetch(apiUrl + `/api/admin/requests/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status })
@@ -178,21 +180,21 @@
     }
 
     async function deleteRequest(id) {
-  if (!confirm("Are you sure you want to delete this request permanently?")) return;
+      if (!confirm("Are you sure you want to delete this request permanently?")) return;
 
-  try {
-    const res = await fetch(`http://localhost:5050/api/admin/requests/${id}`, {
-      method: "DELETE"
-    });
+      try {
+        const res = await fetch(apiUrl + `/api/admin/requests/${id}`, {
+          method: "DELETE"
+        });
 
-    const result = await res.json();
-    alert(result.message || result.error || "Request deleted.");
-    fetchRequests(); // refresh list
-  } catch (err) {
-    console.error("Failed to delete request:", err);
-    alert("Error deleting request.");
-  }
-}
+        const result = await res.json();
+        alert(result.message || result.error || "Request deleted.");
+        fetchRequests(); // refresh list
+      } catch (err) {
+        console.error("Failed to delete request:", err);
+        alert("Error deleting request.");
+      }
+    }
 
     // Load on page load
     fetchRequests();

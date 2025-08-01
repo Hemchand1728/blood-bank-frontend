@@ -60,7 +60,7 @@
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user.email);// Fetch donor's email
 
-    fetch(`http://localhost:5050/api/donor/history/${user.email}`)
+    fetch(apiUrl + ``https://blood-bank-backend-bbp2.onrender.com/api/donor/history/${user.email}`)
   .then(res => {
     if (!res.ok) throw new Error("No history found or server error");
     return res.json();

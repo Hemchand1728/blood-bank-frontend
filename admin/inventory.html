@@ -108,36 +108,39 @@
 
   <footer>© 2025 Blood Bank System | Admin Panel</footer>
 
-  <script>
-    async function loadInventory() {
-      try {
-        const res = await fetch("http://localhost:5050/api/inventory");
-        const data = await res.json();
-        const tbody = document.querySelector("#inventoryTable tbody");
-        tbody.innerHTML = "";
+  <!-- Insert this just before your inventory script -->
+<script src="../js/config.js"></script>
 
-        if (!data || data.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="4">No inventory data available</td></tr>`;
-          return;
-        }
+<script>
+  async function loadInventory() {
+    try {
+      const res = await fetch(apiUrl + "/api/inventory"); // ✅ Corrected line
+      const data = await res.json();
+      const tbody = document.querySelector("#inventoryTable tbody");
+      tbody.innerHTML = "";
 
-        data.forEach(item => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${item.hospital}</td>
-            <td>${item.location}</td>
-            <td>${item.bloodGroup}</td>
-            <td class="units">${item.units}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      } catch (err) {
-        console.error("Error fetching inventory:", err);
-        alert("❌ Failed to load inventory.");
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4">No inventory data available</td></tr>`;
+        return;
       }
-    }
 
-    loadInventory();
-  </script>
+      data.forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.hospital}</td>
+          <td>${item.location}</td>
+          <td>${item.bloodGroup}</td>
+          <td class="units">${item.units}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    } catch (err) {
+      console.error("Error fetching inventory:", err);
+      alert("❌ Failed to load inventory.");
+    }
+  }
+
+  loadInventory();
+</script>
 </body>
 </html>
