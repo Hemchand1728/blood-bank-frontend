@@ -1,3 +1,4 @@
+<!-- blood-bank-frontend/admin/admin-login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,14 +89,8 @@
     <footer>&copy; 2025 Blood Bank System</footer>
   </div>
 
-  <!-- Load config before login logic -->
+  <!-- Scripts must load in order: config.js then login.js -->
   <script src="../js/config.js"></script>
-  <script src="./login.js"></script>
-  <script>
-    document.getElementById("adminLoginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      adminLogin();
-    });
-  </script>
+  <script src="../js/login.js"></script>
 </body>
 </html>

@@ -5,7 +5,6 @@ async function adminLogin() {
   const password = document.getElementById("password").value.trim();
   const msg = document.getElementById("msg");
 
-  // Basic validation
   if (!email || !password) {
     msg.innerText = "Please fill in all fields";
     msg.style.color = "red";
@@ -13,7 +12,6 @@ async function adminLogin() {
   }
 
   try {
-    // Send POST request to backend
     const res = await fetch(`${apiUrl}/api/admin/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,14 +21,12 @@ async function adminLogin() {
     const result = await res.json();
 
     if (res.ok) {
-      // Store JWT and user info
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", JSON.stringify(result.user));
 
       msg.style.color = "green";
       msg.innerText = result.message || "Login successful ✅";
 
-      // Redirect to dashboard after 1 second
       setTimeout(() => {
         window.location.href = "dashboard.html";
       }, 1000);
@@ -44,3 +40,14 @@ async function adminLogin() {
     msg.style.color = "red";
   }
 }
+
+// Auto-attach the form submit handler
+window.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("adminLoginForm");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      adminLogin();
+    });
+  }
+});
