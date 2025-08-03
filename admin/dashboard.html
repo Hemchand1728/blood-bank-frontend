@@ -1,4 +1,3 @@
-<!-- frontend/admin/dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,7 +94,43 @@
       <span id="units">0</span>
     </div>
   </div>
-  <script src="js/config.js"></script>
-  <script src="admin.js"></script>
+
+  <!-- Load config.js first -->
+  <script src="../js/config.js"></script>
+
+  <!-- Inline JavaScript to fetch and render dashboard data -->
+  <script>
+    window.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Unauthorized access. Please log in.");
+        window.location.href = "adminlogin.html";
+        return;
+      }
+
+      try {
+        const res = await fetch(apiUrl + "/api/admin/stats", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch dashboard data");
+
+        const data = await res.json();
+
+        document.getElementById("donors").innerText = data.totalDonors || 0;
+        document.getElementById("recipients").innerText = data.totalRecipients || 0;
+        document.getElementById("requests").innerText = data.pendingRequests || 0;
+        document.getElementById("units").innerText = data.totalUnits || 0;
+      } catch (err) {
+        console.error("Error loading dashboard:", err);
+        alert("Something went wrong while loading dashboard data.");
+      }
+    });
+  </script>
 </body>
 </html>
