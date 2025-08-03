@@ -114,7 +114,7 @@
       msg.innerText = "Login required to view requests.";
       requestList.style.display = 'none';
     } else {
-      fetch(apiUrl + `https://blood-bank-backend-bbp2.onrender.com/api/recipient/requests?email=${email}`, {
+      fetch(`https://blood-bank-backend-bbp2.onrender.com/api/recipient/requests?email=${email}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
