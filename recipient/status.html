@@ -80,6 +80,9 @@
 
   <p id="noData" style="display: none;">No blood requests found.</p>
 
+  <!-- ✅ Load config.js first -->
+  <script src="../js/config.js"></script>
+
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
@@ -88,7 +91,7 @@
       window.location.href = "../login.html";
     }
 
-    fetch(apiUrl + `https://blood-bank-backend-bbp2.onrender.com/api/recipient/history/${user.email}`, {
+    fetch(`${apiUrl}/api/recipient/history/${user.email}`, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -109,14 +112,14 @@
           <td>${req.bloodGroup || '-'}</td>
           <td>${req.location || '-'}</td>
           <td>${req.reason || 'N/A'}</td>
-          <td>${req.date || '-'}</td>
+          <td>${new Date(req.requestedAt).toLocaleString()}</td>
         </tr>`;
         body.innerHTML += row;
       });
     })
     .catch(err => {
       console.error("Error fetching request history:", err);
-      document.getElementById("noData").textContent = "Failed to load data.";
+      document.getElementById("noData").textContent = "❌ Failed to load data.";
       document.getElementById("noData").style.display = "block";
     });
   </script>
