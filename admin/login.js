@@ -1,12 +1,11 @@
-// frontend/admin/login.js
-
-// Make sure apiUrl is declared in config.js and loaded before this script
+// admin/login.js
 
 async function adminLogin() {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
   const msg = document.getElementById("msg");
 
+  // Basic validation
   if (!email || !password) {
     msg.innerText = "Please fill in all fields";
     msg.style.color = "red";
@@ -14,7 +13,8 @@ async function adminLogin() {
   }
 
   try {
-    const res = await fetch(`${apiUrl}/api/admin/admin-login`, {
+    // Send POST request to backend
+    const res = await fetch(`${apiUrl}/api/admin/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
@@ -23,19 +23,20 @@ async function adminLogin() {
     const result = await res.json();
 
     if (res.ok) {
-      // Store token and user info in localStorage
+      // Store JWT and user info
       localStorage.setItem("token", result.token);
       localStorage.setItem("user", JSON.stringify(result.user));
-      msg.style.color = "green";
-      msg.innerText = result.message || "Login successful";
 
-      // Redirect to admin dashboard after success
+      msg.style.color = "green";
+      msg.innerText = result.message || "Login successful ✅";
+
+      // Redirect to dashboard after 1 second
       setTimeout(() => {
         window.location.href = "dashboard.html";
       }, 1000);
     } else {
       msg.style.color = "red";
-      msg.innerText = result.message || "Invalid credentials";
+      msg.innerText = result.message || "Invalid credentials ❌";
     }
   } catch (err) {
     console.error("Login error:", err);
