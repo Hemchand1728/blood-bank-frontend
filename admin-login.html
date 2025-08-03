@@ -88,6 +88,9 @@
     <footer>&copy; 2025 Blood Bank System</footer>
   </div>
 
+  <!-- ✅ Config with apiUrl -->
+  <script src="../js/config.js"></script>
+
   <script>
     const form = document.getElementById('adminLoginForm');
     const message = document.getElementById('message');
@@ -99,10 +102,10 @@
       const password = document.getElementById('password').value;
 
       try {
-        const res = await fetch(apiUrl + `'https://blood-bank-backend-bbp2.onrender.com/api/admin/login', {
-          method: 'POST',
+        const res = await fetch(apiUrl + "/api/admin/login", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({ email, password })
         });
@@ -110,20 +113,20 @@
         const data = await res.json();
 
         if (res.ok) {
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          message.style.color = 'green';
-          message.innerText = data.message || 'Login successful';
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          message.style.color = "green";
+          message.innerText = data.message || "Login successful";
           setTimeout(() => {
-            window.location.href = 'dashboard.html'; // redirect to admin dashboard
+            window.location.href = "dashboard.html";
           }, 1000);
         } else {
-          message.style.color = 'red';
-          message.innerText = data.message || 'Login failed';
+          message.style.color = "red";
+          message.innerText = data.message || "Login failed";
         }
       } catch (err) {
-        message.style.color = 'red';
-        message.innerText = 'Server error';
+        message.style.color = "red";
+        message.innerText = "Server error";
         console.error(err);
       }
     });
