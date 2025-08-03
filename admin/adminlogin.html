@@ -1,4 +1,3 @@
-<!-- frontend/admin/adminlogin.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +11,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
     }
 
     .login-box {
@@ -57,34 +57,44 @@
       color: red;
       margin-top: 10px;
     }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: #666;
+    }
   </style>
 </head>
 <body>
   <div class="login-box">
-    <h2>🔐 Admin Login</h2>
+    <h2>Admin Login 🔐</h2>
     <form id="adminLoginForm">
       <input type="email" id="email" placeholder="Admin Email" required />
       <input type="password" id="password" placeholder="Password" required />
       <button type="submit">Login</button>
       <div id="error"></div>
     </form>
+    <footer>© 2025 Blood Bank System</footer>
   </div>
 
-  <!-- ✅ Load API base URL -->
+  <!-- ✅ Config must be loaded first -->
   <script src="../js/config.js"></script>
 
+  <!-- ✅ Inline login logic -->
   <script>
     document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorBox = document.getElementById("error");
 
       try {
         const res = await fetch(apiUrl + "/api/admin/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email, password })
         });
 
         const data = await res.json();
@@ -92,12 +102,18 @@
         if (res.ok) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          window.location.href = "dashboard.html"; // ✅ Adjust path if dashboard is elsewhere
+          errorBox.style.color = "green";
+          errorBox.innerText = "Login successful!";
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
         } else {
-          document.getElementById("error").innerText = data.message || "Login failed";
+          errorBox.style.color = "red";
+          errorBox.innerText = data.message || "Login failed";
         }
       } catch (err) {
-        document.getElementById("error").innerText = "Something went wrong.";
+        errorBox.innerText = "Something went wrong.";
+        errorBox.style.color = "red";
       }
     });
   </script>
