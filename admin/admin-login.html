@@ -89,8 +89,14 @@
     <footer>&copy; 2025 Blood Bank System</footer>
   </div>
 
-  <!-- Scripts must load in order: config.js then login.js -->
+  <!-- Must load config first -->
   <script src="../js/config.js"></script>
-  <script src="../js/login.js"></script>
+  <script src="login.js"></script>
+  <script>
+    document.getElementById("adminLoginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      adminLogin();
+    });
+  </script>
 </body>
 </html>
