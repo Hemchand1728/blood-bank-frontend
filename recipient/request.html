@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>💉 Request Blood</title>
   <style>
+    /* [Same CSS as yours — untouched for design] */
+    /* Keep your styles as they are */
     body {
       margin: 0;
       padding: 0;
@@ -121,18 +123,18 @@
       </select>
 
       <label class="emoji-label">📍 Hospital / Location</label>
-          <select id="location" required>
-            <option value="">Select a hospital</option>
-            <option value="Apollo Hospital, Hyderabad">Apollo Hospital, Hyderabad</option>
-            <option value="Yashoda Hospitals, Hyderabad">Yashoda Hospitals, Hyderabad</option>
-            <option value="AIIMS, Delhi">AIIMS, Delhi</option>
-            <option value="Fortis Hospital, Mumbai">Fortis Hospital, Mumbai</option>
-            <option value="Christian Medical College, Vellore">Christian Medical College, Vellore</option>
-            <option value="KIMS Hospital, Bengaluru">KIMS Hospital, Bengaluru</option>
-            <option value="PGIMER, Chandigarh">PGIMER, Chandigarh</option>
-            <option value="Narayana Health, Bengaluru">Narayana Health, Bengaluru</option>
-            <option value="Other">Other</option>
-          </select>
+      <select id="location" required>
+        <option value="">Select a hospital</option>
+        <option value="Apollo Hospital, Hyderabad">Apollo Hospital, Hyderabad</option>
+        <option value="Yashoda Hospitals, Hyderabad">Yashoda Hospitals, Hyderabad</option>
+        <option value="AIIMS, Delhi">AIIMS, Delhi</option>
+        <option value="Fortis Hospital, Mumbai">Fortis Hospital, Mumbai</option>
+        <option value="Christian Medical College, Vellore">Christian Medical College, Vellore</option>
+        <option value="KIMS Hospital, Bengaluru">KIMS Hospital, Bengaluru</option>
+        <option value="PGIMER, Chandigarh">PGIMER, Chandigarh</option>
+        <option value="Narayana Health, Bengaluru">Narayana Health, Bengaluru</option>
+        <option value="Other">Other</option>
+      </select>
 
       <label class="emoji-label">📝 Reason / Message</label>
       <textarea id="reason" placeholder="Brief reason for blood request..." required></textarea>
@@ -142,6 +144,7 @@
     <div id="message" class="msg" style="display: none;"></div>
   </div>
 
+  <script src="../js/config.js"></script> <!-- ✅ Load apiUrl -->
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
@@ -160,7 +163,7 @@
       const reason = document.getElementById("reason").value;
 
       try {
-        const res = await fetch(apiUrl + `"https://blood-bank-backend-bbp2.onrender.com/api/recipient/request/add", {
+        const res = await fetch(`${apiUrl}/api/recipient/request/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -180,17 +183,15 @@
         }
 
         const data = await res.json();
-        console.log(res);
         msgBox.style.display = "block";
 
         if (res.status === 200) {
           msgBox.className = "msg success";
           msgBox.innerHTML = `✅ ${data.message}` + 
             (data.donorContact ? `<br>📞 Donor Contact: <strong>${data.donorContact}</strong>` : '');
-          
         } else {
           msgBox.className = "msg error";
-          msgBox.innerHTML = `❌ Something went wrong.`;
+          msgBox.innerHTML = `❌ ${data.message || "Something went wrong."}`;
         }
 
       } catch (err) {

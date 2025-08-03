@@ -31,13 +31,17 @@
   <h2>Your Blood Request History</h2>
   <ul id="historyList"></ul>
 
+  <!-- Load API URL -->
+  <script src="../js/config.js"></script>
+
   <script>
     const token = localStorage.getItem('token');
     const historyList = document.getElementById('historyList');
 
-    fetch(apiUrl + `'/api/recipient/history', {
+    fetch(`${apiUrl}/api/recipient/history`, {
       headers: {
-        Authorization: token
+        Authorization: 'Bearer ' + token,
+        "Content-Type": "application/json"
       }
     })
       .then(res => res.json())
@@ -58,6 +62,7 @@
         }
       })
       .catch(err => {
+        console.error(err);
         historyList.innerHTML = '<li>Error loading history.</li>';
       });
   </script>
