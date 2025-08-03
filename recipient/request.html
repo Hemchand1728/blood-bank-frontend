@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>💉 Request Blood</title>
   <style>
-    /* [Same CSS as yours — untouched for design] */
-    /* Keep your styles as they are */
     body {
       margin: 0;
       padding: 0;
@@ -144,16 +142,15 @@
     <div id="message" class="msg" style="display: none;"></div>
   </div>
 
-  <script src="../js/config.js"></script> <!-- ✅ Load apiUrl -->
+  <script src="../js/config.js"></script>
   <script>
     const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
+    const msgBox = document.getElementById("message");
 
     if (!user || user.role !== 'recipient') {
       window.location.href = "login.html";
     }
-
-    const msgBox = document.getElementById("message");
 
     document.getElementById("requestForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -163,29 +160,24 @@
       const reason = document.getElementById("reason").value;
 
       try {
-        const res = await fetch(`${apiUrl}/api/recipient/request/add`, {
+        const response = await fetch(`${apiUrl}/api/recipient/request/add`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           },
-          body: JSON.stringify({ 
-            email: user.email, 
-            bloodGroup, 
-            location, 
-            reason 
-          }),
+          body: JSON.stringify({
+            email: user.email,
+            bloodGroup,
+            location,
+            reason
+          })
         });
 
-        const contentType = res.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Invalid JSON response from server");
-        }
-
-        const data = await res.json();
+        const data = await response.json();
         msgBox.style.display = "block";
 
-        if (res.status === 200) {
+        if (response.ok) {
           msgBox.className = "msg success";
           msgBox.innerHTML = `✅ ${data.message}` + 
             (data.donorContact ? `<br>📞 Donor Contact: <strong>${data.donorContact}</strong>` : '');
