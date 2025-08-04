@@ -106,15 +106,35 @@
         return;
       }
 
+      // Function to check inventory before displaying approval actions (future integration)
+      function isBloodAvailable(bloodGroup) {
+        // TODO: Replace with actual inventory check logic
+        // For now, always return true (simulate available)
+        return true;
+      }
+
       data.forEach((req, index) => {
-        const row = `<tr>
+        const row = document.createElement('tr');
+        row.innerHTML = `
           <td>${index + 1}</td>
           <td>${req.bloodGroup || '-'}</td>
           <td>${req.location || '-'}</td>
           <td>${req.reason || 'N/A'}</td>
           <td>${new Date(req.requestedAt).toLocaleString()}</td>
-        </tr>`;
-        body.innerHTML += row;
+        `;
+
+        // Future: add logic to check inventory (pseudo example)
+        const bloodAvailable = isBloodAvailable(req.bloodGroup); // Replace with actual check later
+        if (!bloodAvailable) {
+          // Insert styled inline error message
+          const errorRow = document.createElement('tr');
+          errorRow.innerHTML = `<td colspan="5" style="color: red; background: #fff3f3; font-weight: 500;">❌ Requested blood group is out of stock.</td>`;
+          // Insert after the current row
+          body.appendChild(row);
+          body.appendChild(errorRow);
+        } else {
+          body.appendChild(row);
+        }
       });
     })
     .catch(err => {
