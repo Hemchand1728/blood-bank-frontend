@@ -19,7 +19,7 @@ if (document.getElementById("profileForm")) {
     const contact = document.getElementById("contact").value;
 
     try {
-      const res = await fetch(apiUrl + `"https://blood-bank-backend-bbp2.onrender.com/api/donor/profile", {
+      const res = await fetch(apiUrl + "https://blood-bank-backend-bbp2.onrender.com/api/donor/profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ if (document.getElementById("donateForm")) {
     const location = document.getElementById("location").value;
 
     try {
-      const res = await fetch(apiUrl + `"https://blood-bank-backend-bbp2.onrender.com/api/donor/donate", {
+      const res = await fetch(apiUrl + "https://blood-bank-backend-bbp2.onrender.com/api/donor/donate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ if (document.getElementById("donateForm")) {
 
 // -------------------- View Donation History --------------------
 if (document.getElementById("donationTable")) {
-  fetch(apiUrl + ``https://blood-bank-backend-bbp2.onrender.com/api/donor/history?email=${user.email}`, {
+  fetch(apiUrl + `https://blood-bank-backend-bbp2.onrender.com/api/donor/history?email=${user.email}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
