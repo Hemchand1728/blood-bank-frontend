@@ -160,7 +160,7 @@
       const reason = document.getElementById("reason").value;
 
       try {
-        const response = await fetch(`${apiUrl}/api/recipient/request/add`, {
+        const response = await fetch(`${apiUrl}/api/recipient/request`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -179,18 +179,17 @@
 
         if (response.ok) {
           msgBox.className = "msg success";
-          msgBox.innerHTML = `✅ ${data.message}` + 
-            (data.donorContact ? `<br>📞 Donor Contact: <strong>${data.donorContact}</strong>` : '');
+          msgBox.innerText = data.message || "✅ Request submitted successfully!";
         } else {
           msgBox.className = "msg error";
-          msgBox.innerHTML = `❌ ${data.message || "Something went wrong."}`;
+          msgBox.innerText = data.message || "❌ Failed to submit request.";
         }
 
       } catch (err) {
         console.error(err);
         msgBox.className = "msg error";
         msgBox.style.display = "block";
-        msgBox.textContent = "❌ Failed to send request.";
+        msgBox.textContent = "❌ Failed to connect to server.";
       }
     });
   </script>
