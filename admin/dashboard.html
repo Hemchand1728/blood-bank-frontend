@@ -101,9 +101,10 @@
   <script>
     window.addEventListener("DOMContentLoaded", async () => {
       const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
 
-      if (!token) {
-        alert("Unauthorized access. Please log in.");
+      if (!token || !user || user.role !== "admin") {
+        alert("Unauthorized access. Admins only.");
         window.location.href = "adminlogin.html";
         return;
       }
