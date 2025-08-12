@@ -143,55 +143,56 @@
   </div>
 
   <script src="../js/config.js"></script>
-  <script>
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = localStorage.getItem('token');
-    const msgBox = document.getElementById("message");
+  <script src="../js/config.js"></script>
+<script>
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
+  const msgBox = document.getElementById("message");
 
-    if (!user || user.role !== 'recipient') {
-      window.location.href = "login.html";
-    }
+  if (!user || user.role !== 'recipient') {
+    window.location.href = "login.html";
+  }
 
-    document.getElementById("requestForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
+  document.getElementById("requestForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const bloodGroup = document.getElementById("bloodGroup").value;
-      const location = document.getElementById("location").value;
-      const reason = document.getElementById("reason").value;
+    const bloodGroup = document.getElementById("bloodGroup").value;
+    const location = document.getElementById("location").value;
+    const reason = document.getElementById("reason").value;
 
-      try {
-        const response = await fetch(`${apiUrl}/api/recipient/request`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            email: user.email,
-            bloodGroup,
-            location,
-            reason
-          })
-        });
+    try {
+      const response = await fetch(`${apiUrl}/api/recipient/request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          email: user.email,
+          bloodGroup,
+          location,
+          reason
+        })
+      });
 
-        const data = await response.json();
-        msgBox.style.display = "block";
+      const data = await response.json();
+      msgBox.style.display = "block";
 
-        if (response.ok) {
-          msgBox.className = "msg success";
-          msgBox.innerText = data.message || "✅ Request submitted successfully!";
-        } else {
-          msgBox.className = "msg error";
-          msgBox.innerText = data.message || "❌ Failed to submit request.";
-        }
-
-      } catch (err) {
-        console.error(err);
+      if (response.ok) {
+        msgBox.className = "msg success";
+        msgBox.innerText = data.message || "✅ Request submitted successfully!";
+      } else {
         msgBox.className = "msg error";
-        msgBox.style.display = "block";
-        msgBox.textContent = "❌ Failed to connect to server.";
+        msgBox.innerText = data.message || "❌ Failed to submit request.";
       }
-    });
-  </script>
+
+    } catch (err) {
+      console.error(err);
+      msgBox.className = "msg error";
+      msgBox.style.display = "block";
+      msgBox.textContent = "❌ Failed to connect to server.";
+    }
+  });
+</script>
 </body>
 </html>
