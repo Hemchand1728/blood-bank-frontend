@@ -53,14 +53,25 @@
       background: #e3f2fd;
     }
 
-    nav a {
+    nav a, nav button {
       text-decoration: none;
       color: #1e88e5;
       font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    nav button {
+      background: #e53935;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      background: #c62828;
     }
   </style>
 </head>
@@ -73,6 +84,7 @@
   <nav>
     <a href="requests.html">Manage Requests</a>
     <a href="inventory.html">Manage Inventory</a>
+    <button id="logoutBtn">🚪 Logout</button>
   </nav>
 
   <div class="container">
@@ -131,7 +143,13 @@
         alert("Something went wrong while loading dashboard data.");
       }
     });
-    
+
+    // Logout Functionality
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "../index.html"; // Redirect to homepage
+    });
   </script>
 </body>
 </html>
